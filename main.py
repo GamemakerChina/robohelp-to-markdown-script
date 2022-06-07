@@ -19,7 +19,7 @@ def soupManual(htmlfile):
     for code in soup.find_all("p", {'class': ['code']}):
         new_soup = BeautifulSoup(str(code), 'html.parser')
         for uselessTags in new_soup.find_all(["strong", "span"]):
-            uselessTags.decompose()
+            uselessTags.unwrap()
 
         code.replace_with('<pre><code class="language-gml">' + str(new_soup) + '</code></pre>')
 
