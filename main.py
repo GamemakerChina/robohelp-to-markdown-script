@@ -8,7 +8,7 @@ html_file = os.path.splitext(sys.argv[1])[0]
 
 def soupManual(htmlfile):
     html_import = open(htmlfile + ".htm", "r", encoding='utf-8').read()
-    html_replace_br = html_import.replace('<br/>', '').replace('<span class="inline"></span>', '').replace('<span class="inline2"></span>', '')
+    html_replace_br = html_import.replace('<br/>', '')
     soup = BeautifulSoup(html_replace_br, 'html.parser')
     for div in soup.find_all("div", {'class': ['title', 'gotohome', 'footer', 'rh-hide']}):
         div.decompose()
@@ -17,7 +17,11 @@ def soupManual(htmlfile):
         title.decompose()
 
     for code in soup.find_all("p", {'class': ['code']}):
-        code.replace_with('<pre><code class="language-gml">' + code.string + '</code></pre>')
+        new_soup = BeautifulSoup(str(code), 'html.parser')
+        for uselessTags in new_soup.find_all(["strong", "span"]):
+            uselessTags.decompose()
+
+        code.replace_with('<pre><code class="language-gml">' + str(new_soup) + '</code></pre>')
 
     with open(htmlfile + ".soup", "w+", encoding='utf-8') as file:
         file.write(soup.prettify().replace('&lt;', '<').replace('&gt;', '>'))
