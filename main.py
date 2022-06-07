@@ -47,7 +47,11 @@ def cleanManual(soupfile):
     soup = BeautifulSoup(cleaned_html, 'html.parser')
 
     for code in soup.find_all("pre"):
-        code.replace_with('<pre><code class="language-gml">' + code.string + '</code></pre>')
+        new_soup = BeautifulSoup(str(code), 'html.parser')
+        for uselessTags in new_soup.find_all(["p", "pre", "code"]): # Remove excess tags
+            uselessTags.unwrap()
+
+        code.replace_with('<pre><code class="language-gml">' + str(new_soup) + '</code></pre>')
 
     with open(soupfile + ".cleaned", "w+", encoding='utf-8') as file:
         file.write(soup.prettify().replace('&lt;', '<').replace('&gt;', '>'))
@@ -58,4 +62,6 @@ def convertManualToMarkdown(cleanedfile):
 soupManual(html_file)
 cleanManual(html_file)
 convertManualToMarkdown(html_file)
-print("Completed: " + html_file + ".htm")
+
+with open("logs.txt", "a+", encoding='utf-8') as logs:
+    print("Completed: " + html_file + ".htm", file=logs)

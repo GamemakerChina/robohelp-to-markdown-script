@@ -11,4 +11,5 @@ for /R %dir% %%k in (*.cleaned) do (
 for /R %dir% %%k in (*.md) do (
     del /f /s /q %%k
 )
+del /f /s /q logs.txt
 pause
