@@ -64,4 +64,5 @@ cleanManual(html_file)
 convertManualToMarkdown(html_file)
 
 with open("logs.txt", "a+", encoding='utf-8') as logs:
+    print("Converting: " + html_file + ".htm", file=logs)
     print("Completed: " + html_file + ".htm", file=logs)
