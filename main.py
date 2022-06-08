@@ -13,12 +13,12 @@ def soupManual(htmlfile):
     for div in soup.find_all("div", {'class': ['title', 'gotohome', 'footer', 'rh-hide']}):
         div.decompose()
 
-    for title in soup.find_all("title", "br"):
+    for title in soup.find_all("title"):
         title.decompose()
 
     for code in soup.find_all("p", {'class': ['code']}):
         new_soup = BeautifulSoup(str(code), 'html.parser')
-        for uselessTags in new_soup.find_all(["strong", "span"]):
+        for uselessTags in new_soup.find_all(["strong", "span", "br"]):
             uselessTags.unwrap()
 
         code.replace_with('<pre><code class="language-gml">' + str(new_soup) + '</code></pre>')
@@ -51,13 +51,16 @@ def cleanManual(soupfile):
         for uselessTags in new_soup.find_all(["p", "pre", "code"]): # Remove excess tags
             uselessTags.unwrap()
 
-        code.replace_with('<pre><code class="language-gml">' + str(new_soup) + '</code></pre>')
+        code.replace_with('<pre><code class="language-gml">' + str(new_soup.prettify()).replace("    ", "") + '</code></pre>')
+
+    for image in soup.find_all("img"):
+        image.replace_with('<br/>' + str(image) + '<br/>')
 
     with open(soupfile + ".cleaned", "w+", encoding='utf-8') as file:
         file.write(soup.prettify().replace('&lt;', '<').replace('&gt;', '>'))
 
 def convertManualToMarkdown(cleanedfile):
-    os.system("pandoc -f html " + cleanedfile + ".cleaned -o " + os.path.splitext(cleanedfile)[0] + ".md")
+    os.system("pandoc -f html " + cleanedfile + ".cleaned -o " + os.path.splitext(cleanedfile)[0] + ".md -t markdown_phpextra")
 
 soupManual(html_file)
 cleanManual(html_file)
