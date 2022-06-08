@@ -3,8 +3,11 @@ from lxml.html.clean import Cleaner
 from bs4 import BeautifulSoup
 import sys
 import os
+import re
 
 html_file = os.path.splitext(sys.argv[1])[0]
+
+Manual_Assets_Mirror = "https://gms.magecorn.com/Manual/assets/"
 
 def soupManual(htmlfile):
     html_import = open(htmlfile + ".htm", "r", encoding='utf-8').read()
@@ -54,13 +57,15 @@ def cleanManual(soupfile):
         code.replace_with('<pre><code class="language-gml">' + str(new_soup.prettify()).replace("    ", "") + '</code></pre>')
 
     for image in soup.find_all("img"):
+        image.attrs['src'] = (Manual_Assets_Mirror + image.attrs['src'])
+        image.attrs['src'] = re.sub(".*/assets/", Manual_Assets_Mirror, image.attrs['src'], 0)
         image.replace_with('<br/>' + str(image) + '<br/>')
 
     with open(soupfile + ".cleaned", "w+", encoding='utf-8') as file:
         file.write(soup.prettify().replace('&lt;', '<').replace('&gt;', '>'))
 
 def convertManualToMarkdown(cleanedfile):
-    os.system("pandoc -f html " + cleanedfile + ".cleaned -o " + os.path.splitext(cleanedfile)[0] + ".md -t markdown_phpextra")
+    os.system("pandoc -f html " + cleanedfile + ".cleaned -o " + os.path.splitext(cleanedfile)[0] + ".md -t gfm")
 
 soupManual(html_file)
 cleanManual(html_file)
