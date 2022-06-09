@@ -67,9 +67,15 @@ def cleanManual(soupfile):
 def convertManualToMarkdown(cleanedfile):
     os.system("pandoc -f html " + cleanedfile + ".cleaned -o " + os.path.splitext(cleanedfile)[0] + ".md -t gfm")
 
-soupManual(html_file)
-cleanManual(html_file)
-convertManualToMarkdown(html_file)
+if sys.argv[2] == "--all":
+    soupManual(html_file)
+    cleanManual(html_file)
+    convertManualToMarkdown(html_file)
+
+if sys.argv[2] == "--clean-html":
+    soupManual(html_file)
+    cleanManual(html_file)
+
 
 with open("logs.txt", "a+", encoding='utf-8') as logs:
     print("Converting: " + html_file + ".htm", file=logs)
