@@ -1,2 +1,3 @@
 beautifulsoup4==4.11.1
+jsbeautifier==1.14.3
 lxml==4.9.0

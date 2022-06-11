@@ -9,3 +9,4 @@ Convert RoboHelp Manual to Markdown script. (semi-automatic, manual adjustment i
     - lxml
     - BeautifulSoup (bs4)
     - Pandoc
+    - jsbeautifier
