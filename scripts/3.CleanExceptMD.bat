@@ -1,6 +1,6 @@
 @echo off
 
-set dir="workdir"
+set dir="../workdir"
 
 for /R %dir% %%k in (*.soup) do (
     del /f /s /q %%k
@@ -8,8 +8,7 @@ for /R %dir% %%k in (*.soup) do (
 for /R %dir% %%k in (*.cleaned) do (
     del /f /s /q %%k
 )
-for /R %dir% %%k in (*.md) do (
+for /R %dir% %%k in (*.htm) do (
     del /f /s /q %%k
 )
-del /f /s /q logs.txt
 pause

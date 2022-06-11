@@ -1,2 +1,3 @@
 workdir/*
 logs.txt
+node_modules

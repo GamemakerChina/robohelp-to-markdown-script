@@ -1,6 +1,6 @@
 @echo off
 
-set dir="workdir"
+set dir="../workdir"
 
 for /R %dir% %%i in (*.htm) do (
     python.exe main.py %%i --all
