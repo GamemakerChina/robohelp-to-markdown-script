@@ -4,7 +4,6 @@ set dir="../workdir"
 
 echo Deleting unnecessary files.
 rd /s /q %dir%\\template
-rd /s /q %dir%\\whxdata
 rd /s /q %dir%\\assets\\scripts
 rd /s /q %dir%\\assets\\css
 rd /s /q %dir%\\assets\\fonts
