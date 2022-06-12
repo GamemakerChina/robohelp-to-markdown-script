@@ -1,11 +1,18 @@
 # coding:utf-8
+import time
 from lxml.html.clean import Cleaner
 from bs4 import BeautifulSoup
 import sys
 import os
 import re
+import urllib
+import urllib.request
+from PIL import Image
+from io import StringIO, BytesIO
 
 html_file = os.path.splitext(sys.argv[1])[0]
+
+Local_Assets = "http://localhost:8080/assets/"
 
 Manual_Assets_Mirror = "https://gms.magecorn.com/Manual/assets/"
 
@@ -57,9 +64,20 @@ def cleanManual(soupfile):
         code.replace_with('<pre><code class="language-gml">' + str(new_soup.prettify()).replace("    ", "") + '</code></pre>')
 
     for image in soup.find_all("img"):
+        image.attrs['src'] = (Local_Assets + image.attrs['src'])
+        image.attrs['src'] = re.sub(".*/assets/", Local_Assets, image.attrs['src'], 0)
+        image_size = urllib.request.urlopen(image.attrs['src']).read()
+        image_tmp = BytesIO(image_size)
+        img = Image.open(image_tmp)
+        print(max(img.size))
+        if max(img.size) >= 10 and max(img.size) <= 60:
+            image.replace_with(str(image))
+        else:
+            image.replace_with('<br/>' + str(image) + '<br/>')
+
+    for image in soup.find_all("img"):
         image.attrs['src'] = (Manual_Assets_Mirror + image.attrs['src'])
         image.attrs['src'] = re.sub(".*/assets/", Manual_Assets_Mirror, image.attrs['src'], 0)
-        image.replace_with('<br/>' + str(image) + '<br/>')
 
     with open(soupfile + ".cleaned", "w+", encoding='utf-8') as file:
         file.write(soup.prettify().replace('&lt;', '<').replace('&gt;', '>'))
