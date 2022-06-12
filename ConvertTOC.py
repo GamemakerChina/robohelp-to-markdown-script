@@ -29,3 +29,6 @@ with open(js_file, "w", encoding='utf-8') as toc:
         if "})();" in line:
             continue
         toc.write(line)
+
+with open(js_file, "a", encoding='utf-8') as toc:
+    toc.write("module.exports = toc;")

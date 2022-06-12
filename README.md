@@ -10,3 +10,5 @@ Convert RoboHelp Manual to Markdown script. (semi-automatic, manual adjustment i
     - BeautifulSoup (bs4)
     - Pandoc
     - jsbeautifier
+
+ - Node.js 
