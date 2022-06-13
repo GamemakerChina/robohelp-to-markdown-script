@@ -17,4 +17,5 @@ Convert RoboHelp Manual to Markdown script. (semi-automatic, manual adjustment i
 
  - Replace "\&amp;lt;" to "<"
  - Replace "\&amp;gt;" to ">"
+ - Replace "\&amp;amp;" to "&"
  - Replace ".htm" to ""(empty)
