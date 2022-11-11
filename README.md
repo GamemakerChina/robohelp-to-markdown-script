@@ -11,7 +11,8 @@ Convert RoboHelp Manual to Markdown script. (semi-automatic, manual adjustment i
     - Pandoc
     - jsbeautifier
 
- - Node.js 
+ - Node.js (for `OutputSidebar.js`, but optional)
+ - Pandoc (command-line)
 
 ## Manual by yourself
 
