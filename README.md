@@ -12,12 +12,13 @@ pip install -r requirements.txt
 2. Download and install Pandoc from [here](https://github.com/jgm/pandoc/releases/latest) if you are using Windows.
 3. Copy all files in `GMS2-Robohelp-en` to `workdir`.(The folder itself is not included, i.e. "workdir/GMS2-Robohelp-en" is invalid.)
 4. Executes batches in `scripts` in the order of file names.(If the batch prompts that the file cannot be found, please copy these batches to this repo root directory.)
+5. (For docsify only) Run `OutputSidebar.js` with Node.js to make `_sidebar.md`
 
 ## Requirement
 
  - Python >= 3.8
  - Pandoc (command-line)
- - Node.js (for `OutputSidebar.js`, but optional)
+ - Node.js (for `OutputSidebar.js`, this script has no additional dependencies)
 
 ## Manual by yourself
 
